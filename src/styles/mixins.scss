@@ -1,0 +1,114 @@
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin page {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+@mixin full-bg {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin button-image {
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    &:active {
+        transform: scale(1.03);
+    }
+}
+
+@mixin circle-button {
+    @include button-image;
+    @include flex;
+    border-radius: 50%;
+}
+
+@mixin circle-text {
+    @include circle-button;
+    width: 80px;
+    height: 80px;
+    position: relative;
+
+    span {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 700;
+        font-family: $font-pixels;
+        font-size: 40px;
+        text-shadow: 3px 3px $bg-1;
+    }
+}
+
+@mixin button-text {
+    @include button-image;
+    @include flex;
+
+    text-transform: uppercase;
+    position: relative;
+    width: 290px;
+    height: 81px;
+    color: #fff;
+
+    span {
+        font-size: 30px;
+        line-height: 32px;
+        position: relative;
+        z-index: 1;
+        color: #fff;
+        font-family: $font-pixels;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    @media (max-width: 480px) {
+        width: 230px;
+        height: 51px;
+
+        span {
+            font-size: 18px;
+            line-height: 22px;
+        }
+    }
+}
+
+@mixin title-image {
+    width: 259px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    @media (max-width: 480px) {
+        &__title {
+            width: 180px;
+        }
+    }
+}
