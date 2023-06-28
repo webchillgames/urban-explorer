@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LeafletMap v-if="game" :items="game.items" class="user-leaflet" />
+    <LeafletMap v-if="game.items.length" :items="game.items" class="user-leaflet" />
     <div v-else>Точек нет</div>
   </div>
 </template>

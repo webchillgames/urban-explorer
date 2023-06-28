@@ -14,9 +14,9 @@ const game = {
     Помоги Кате вернуть их.`,
   images: [{ id: 1, link: '/level-1/shiba.jpg' }],
   items: [
-    { id: 1, coords: [-8.554616, 115.27535], model: '/shiba/scene.gltf', isCatched: false },
-    { id: 2, coords: [-8.556663, 115.275173], model: '/shiba/scene.gltf', isCatched: false },
-    { id: 3, coords: [-8.552557, 115.274879], model: '/shiba/scene.gltf', isCatched: false }
+    { id: 1, coords: [ -8.552736, 115.274835], model: '/shiba/scene.gltf', isCatched: false },
+    { id: 2, coords: [-8.552712, 115.274941], model: '/shiba/scene.gltf', isCatched: false },
+    // { id: 3, coords: [-8.552557, 115.274879], model: '/shiba/scene.gltf', isCatched: false }
   ]
 }
 

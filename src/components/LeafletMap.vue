@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, type PropType } from 'vue'
+import { computed, defineComponent, onMounted, ref, type PropType, watch } from 'vue'
 import type { IItem } from '@/interfaces'
 
 import 'leaflet/dist/leaflet.css'
@@ -21,9 +21,22 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const zoom = ref(15)
+    const zoom = ref(18)
     const mapRef = ref()
     const map = ref<L.Map>()
+
+    const userLat = ref(0)
+    const userLong = ref(0)
+
+    const myIcon = L.icon({
+      iconUrl: '/src/assets/pin.png',
+      iconSize: [28, 55],
+      iconAnchor: [14, 54]
+      // popupAnchor: [-3, -76],
+      // shadowUrl: 'my-icon-shadow.png',
+      // shadowSize: [68, 95],
+      // shadowAnchor: [22, 94]
+    })
 
     function setCenter() {
       let xSum = 0
@@ -48,6 +61,31 @@ export default defineComponent({
       return props.items.map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
     })
 
+    const userMarker = computed((): L.Marker => {
+      const options = {
+        title: 'user point',
+        riseOnHover: true,
+        clickable: false,
+        interactive: true,
+        icon: myIcon
+      }
+      return L.marker({ lat: userLat.value, lng: userLong.value }, options)
+    })
+
+    function showUserPosition() {
+      if (map.value) {
+        const marker = userMarker.value
+        map.value.removeLayer(marker)
+        map.value.addLayer(marker)
+      }
+
+      // map.value.addTo(map.value as L.Map)
+    }
+
+    watch(userLong, () => {
+      showUserPosition()
+    })
+
     function createMapContainer(mapRef: HTMLElement) {
       const options = {
         trackResize: true,
@@ -59,7 +97,7 @@ export default defineComponent({
 
     function setTileLayer(mapDiv: L.Map) {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18
+        maxZoom: 20
       }).addTo(mapDiv)
     }
 
@@ -69,33 +107,26 @@ export default defineComponent({
       }
     }
 
-    // const options = {
-    //   enableHighAccuracy: true,
-    //   timeout: 5000,
-    //   maximumAge: 0
-    // }
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    }
 
-    // const userLat = ref(null)
-    // const userLong = ref(null)
+    function error() {
+      alert('ошибка геолакации')
+      console.log('ошибка геолакации')
+    }
 
-    // function success(pos) {
-    //   const crd = pos.coords
+    function success(pos: GeolocationPosition) {
+      console.log(pos)
 
-    //   // console.log('Your current position is:')
+      const crd = pos.coords
+      userLat.value = crd.latitude
+      userLong.value = crd.longitude
+    }
 
-    //   userLat.value = crd.latitude
-    //   userLong.value = crd.longitude
-
-    //   // console.log(`Latitude : ${crd.latitude}`)
-    //   // console.log(`Longitude: ${crd.longitude}`)
-    //   // console.log(`More or less ${crd.accuracy} meters.`)
-    // }
-
-    // function error(err) {
-    //   console.warn(`ERROR(${err.code}): ${err.message}`)
-    // }
-
-    // navigator.geolocation.getCurrentPosition(success, error, options)
+    navigator.geolocation.watchPosition(success, error, options)
 
     onMounted(() => {
       map.value = createMapContainer(mapRef.value)
