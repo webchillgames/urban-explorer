@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
-import type { IPoint } from '@/interfaces'
+import { computed, defineComponent, onMounted, ref, type PropType } from 'vue'
+import type { IItem } from '@/interfaces'
 
 import 'leaflet/dist/leaflet.css'
 
@@ -16,7 +16,7 @@ import L from 'leaflet'
 export default defineComponent({
   props: {
     items: {
-      type: Array,
+      type: Array as PropType<IItem[]>,
       required: true
     }
   },
@@ -25,20 +25,18 @@ export default defineComponent({
     const mapRef = ref()
     const map = ref<L.Map>()
 
-    const center = computed(() => {
-      const sumX = props.items.reduce((a: number, c: number[]): number => {
-        return a + c.coords[0]
-      }, 0)
+    function setCenter() {
+      let xSum = 0
+      let ySum = 0
+      const quantity = props.items.length
 
-      const sumY = props.items.reduce((a: number, c: number[]): number => {
-        return a + c.coords[1]
-      }, 0)
+      props.items.forEach((v: IItem) => {
+        xSum = xSum + v.coords[0]
+        ySum = ySum + v.coords[1]
+      })
 
-      const latitude = sumX / props.items.length
-      const long = sumY / props.items.length
-
-      return { lat: latitude, lng: long }
-    })
+      return { lat: xSum / quantity, lng: ySum / quantity }
+    }
 
     const markers = computed((): L.Marker[] => {
       const options = {
@@ -56,7 +54,7 @@ export default defineComponent({
         preferCanvas: true,
         zoomAnimation: false
       }
-      return L.map(mapRef, options).setView(center.value, zoom.value)
+      return L.map(mapRef, options).setView(setCenter(), zoom.value)
     }
 
     function setTileLayer(mapDiv: L.Map) {
@@ -70,6 +68,34 @@ export default defineComponent({
         markers.value.forEach((v) => v.addTo(map.value as L.Map))
       }
     }
+
+    // const options = {
+    //   enableHighAccuracy: true,
+    //   timeout: 5000,
+    //   maximumAge: 0
+    // }
+
+    // const userLat = ref(null)
+    // const userLong = ref(null)
+
+    // function success(pos) {
+    //   const crd = pos.coords
+
+    //   // console.log('Your current position is:')
+
+    //   userLat.value = crd.latitude
+    //   userLong.value = crd.longitude
+
+    //   // console.log(`Latitude : ${crd.latitude}`)
+    //   // console.log(`Longitude: ${crd.longitude}`)
+    //   // console.log(`More or less ${crd.accuracy} meters.`)
+    // }
+
+    // function error(err) {
+    //   console.warn(`ERROR(${err.code}): ${err.message}`)
+    // }
+
+    // navigator.geolocation.getCurrentPosition(success, error, options)
 
     onMounted(() => {
       map.value = createMapContainer(mapRef.value)
@@ -86,8 +112,8 @@ export default defineComponent({
 .leaflet-map {
   border-radius: 8px;
   overflow: hidden;
-  // height: 400px;
-  // width: 100%;
+  width: 100%;
+  height: 400px;
 
   &__map {
     width: 100%;

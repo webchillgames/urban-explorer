@@ -55,6 +55,7 @@ export default defineComponent({
     border-radius: 16px;
     width: 80%;
     padding: 30px;
+    box-sizing: border-box;
 
     * {
       position: relative;

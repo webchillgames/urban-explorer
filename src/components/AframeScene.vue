@@ -18,51 +18,24 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, type PropType } from 'vue'
+import type {IItem} from '@/interfaces'
 
 export default defineComponent({
+  emits: ['catchItem', 'finish'],
   props: {
     items: {
-      type: Array,
+      type: Array as PropType<IItem[]>,
       required: true
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const items = computed(() => props.items)
-    
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    }
-
-    const userLat = ref(null)
-    const userLong = ref(null)
-
-    function success(pos) {
-      const crd = pos.coords
-
-      // console.log('Your current position is:')
-
-      userLat.value = crd.latitude
-      userLong.value = crd.longitude
-
-      // console.log(`Latitude : ${crd.latitude}`)
-      // console.log(`Longitude: ${crd.longitude}`)
-      // console.log(`More or less ${crd.accuracy} meters.`)
-    }
-
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`)
-    }
-
-    navigator.geolocation.getCurrentPosition(success, error, options)
-
-    const reminder = computed(() => items.value.filter((v) => v.isCatched === false))
+    const reminder = computed(() => items.value.filter((v: IItem) => v.isCatched === false))
 
     AFRAME.registerComponent('scene', {
       init() {
-        items.value.forEach((item) => {
+        items.value.forEach((item: IItem) => {
           const modelEl = document.createElement('a-gltf-model')
           modelEl.setAttribute('model', '')
           modelEl.setAttribute('id', `${item.id}`)
@@ -112,14 +85,13 @@ export default defineComponent({
           const id = evt.target.getAttribute('id')
 
           if (!reminder.value.length) {
-            alert('Finish!')
+            ctx.emit('finish')
           }
 
           return items.value.forEach((item) => {
             if (item.id === Number(id)) {
               if (item.isCatched) {
                 return
-                // alert('Already caught')
               } else {
                 item.isCatched = true
                 const el = document.getElementById(`${item.id}`)
@@ -127,7 +99,8 @@ export default defineComponent({
                 if (scene && el) {
                   scene.removeChild(el)
                 }
-                alert(`You did it! Left: ${reminder.value.length} items`)
+
+                ctx.emit('catchItem', reminder.value.length)
               }
             }
           })
@@ -158,19 +131,9 @@ export default defineComponent({
         //   alert(this.el.distance)
         // })
       }
-      // tick() {
-
-      // }
     })
 
     return {}
   }
 })
 </script>
-
-<style lang="scss">
-.aframe-scene {
-  &__score {
-  }
-}
-</style>

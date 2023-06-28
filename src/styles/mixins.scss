@@ -41,25 +41,6 @@
     border-radius: 50%;
 }
 
-@mixin circle-text {
-    @include circle-button;
-    width: 80px;
-    height: 80px;
-    position: relative;
-
-    span {
-        position: absolute;
-        z-index: 2;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-weight: 700;
-        font-family: $font-pixels;
-        font-size: 40px;
-        text-shadow: 3px 3px $bg-1;
-    }
-}
-
 @mixin button-text {
     @include button-image;
     @include flex;

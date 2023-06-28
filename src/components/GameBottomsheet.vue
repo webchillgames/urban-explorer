@@ -1,17 +1,17 @@
 <template>
-  <div class="game-bottomsheet">
-    <button type="button" @touchstart="$emit('start', $event)" @touchmove="$emit('move', $event)">
+  <div class="game-bottomsheet" :class="{ open: top === 0 }" :style="{ top: top + 'px' }">
+    <button type="button" @touchstart="start" @touchmove="move">
       <AppSvg link="arrow-top" />
     </button>
     <div class="wrapper" ref="wrapperRef">
       <h3>Карта</h3>
-      <LeafletMap v-if="game" :items="game.items" class="game-bottomsheet__map" />
+      <LeafletMap :items="game.items" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 
@@ -19,13 +19,44 @@ import LeafletMap from '@/components/LeafletMap.vue'
 import AppSvg from '@/elements/AppSvg.vue'
 
 export default defineComponent({
-  emits: ['move', 'start'],
   setup() {
     const gameStore = useGameStore()
     const { game } = storeToRefs(gameStore)
 
+    const top = ref(window.innerHeight)
+    const coordY = ref()
+
+    function start(evt) {
+      coordY.value = evt.touches[0].clientY
+    }
+
+    function move(evt) {
+      if (coordY.value) {
+        const newCoordY = evt.touches[0].clientY
+
+        if (coordY.value > newCoordY) {
+          const length = coordY.value - newCoordY
+          top.value = top.value - length
+
+          if (top.value < window.innerHeight && top.value !== 0) {
+            top.value = 0
+            coordY.value = 0
+          }
+        } else {
+          top.value = coordY.value + newCoordY
+
+          if (top.value > 0) {
+            top.value = window.innerHeight
+          }
+        }
+      }
+    }
+
     return {
-      game
+      start,
+      move,
+      game,
+      top
     }
   },
   components: { LeafletMap, AppSvg }
@@ -79,11 +110,6 @@ export default defineComponent({
     svg {
       transform: rotate(180deg);
     }
-  }
-
-  &__map {
-    width: 100%;
-    height: 500px;
   }
 }
 </style>

@@ -9,12 +9,10 @@ import { defineComponent, onMounted } from 'vue'
 import { useGameStore } from '@/stores/game'
 
 const game = {
-  task: {
-    description: `Герой, сегодня твоя помощь нужна Кате. После школы она всегда подрабатывает выгуливая соседских собак.
+  task: `Герой, сегодня твоя помощь нужна Кате. После школы она всегда подрабатывает выгуливая соседских собак.
     Но сегодня игривые Шиба-ину разбежались кто куда, и она не может их поймать.
     Помоги Кате вернуть их.`,
-    images: [{ id: 1, link: '/level-1/shiba.jpg' }]
-  },
+  images: [{ id: 1, link: '/level-1/shiba.jpg' }],
   items: [
     { id: 1, coords: [-8.554616, 115.27535], model: '/shiba/scene.gltf', isCatched: false },
     { id: 2, coords: [-8.556663, 115.275173], model: '/shiba/scene.gltf', isCatched: false },
@@ -34,6 +32,7 @@ export default defineComponent({
     onMounted(() => {
       getGame()
     })
+    
     return {}
   }
 })

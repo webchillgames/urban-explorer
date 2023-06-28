@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Где искать</h3>
     <LeafletMap v-if="game" :items="game.items" class="user-leaflet" />
     <div v-else>Точек нет</div>
   </div>
@@ -17,6 +16,7 @@ export default defineComponent({
   setup() {
     const gameStore = useGameStore()
     const { game } = storeToRefs(gameStore)
+
     return {
       game
     }

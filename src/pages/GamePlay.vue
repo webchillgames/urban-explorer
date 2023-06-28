@@ -2,26 +2,25 @@
   <div class="game-play">
     <GameTopMenu @paused="isPaused = true" />
 
-    <AframeScene v-if="game" :items="game.items" />
-
-    <GameBottomsheet
-      :class="{ open: top === 0 }"
-      ref="bottomsheetRef"
-      @start="start"
-      @move="move"
-      :style="{ top: top + 'px' }"
+    <AframeScene
+      v-if="game && game.items"
+      :items="game.items"
+      @finish="finish"
+      @catchItem="catchItem"
     />
 
-    <ResultAlert v-if="showMidResult" />
+    <GameBottomsheet v-if="game.items.length" />
 
-    <LevelComleteMenu v-if="isFinished" />
+    <ResultAlert v-if="showMidResult" @close="showMidResult = false" />
 
-    <PauseMenu v-if="isPaused" @unpaused="isPaused = false" />
+    <LevelComleteMenu v-if="isFinished" @exit="exit" />
+
+    <PauseMenu v-if="isPaused" @unpaused="isPaused = false" @exit="exit" @restart="restart" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 
@@ -32,6 +31,7 @@ import GameBottomsheet from '@/components/GameBottomsheet.vue'
 import ResultAlert from '@/components/ResultAlert.vue'
 import AframeScene from '@/components/AframeScene.vue'
 import LevelComleteMenu from '@/components/LevelComleteMenu.vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   components: {
@@ -45,46 +45,42 @@ export default defineComponent({
   setup() {
     const gameStore = useGameStore()
     const { game } = storeToRefs(gameStore)
+    const { clearResults } = gameStore
+    const router = useRouter()
+
     const isPaused = ref(false)
-    const bottomsheetRef = ref()
     const isFinished = ref(false)
     const showMidResult = ref(false)
 
-    const top = ref(window.innerHeight)
-    const coordY = ref()
-
-    function start(evt) {
-      coordY.value = evt.touches[0].clientY
+    function finish() {
+      isFinished.value = true
     }
 
-    function move(evt) {
-      if (coordY.value) {
-        const newCoordY = evt.touches[0].clientY
-
-        if (coordY.value > newCoordY) {
-          const length = coordY.value - newCoordY
-          top.value = top.value - length
-
-          if (top.value < window.innerHeight && top.value !== 0) {
-            top.value = 0
-            coordY.value = 0
-          }
-        } else {
-          top.value = coordY.value + newCoordY
-
-          if (top.value > 0) {
-            top.value = window.innerHeight
-          }
-        }
-      }
+    function catchItem() {
+      showMidResult.value = true
     }
 
+    function exit() {
+      router.push({ path: '/' })
+      clearResults()
+    }
+
+    function restart() {
+      isPaused.value = false
+      clearResults()
+      showMidResult.value = true
+    }
+
+    onMounted(() => {
+      showMidResult.value = true
+    })
+    
     return {
+      restart,
+      exit,
+      catchItem,
+      finish,
       isFinished,
-      start,
-      top,
-      move,
-      bottomsheetRef,
       isPaused,
       game,
       showMidResult
@@ -97,15 +93,6 @@ export default defineComponent({
 .game-play {
   min-height: 100%;
   position: relative;
-
-  &__pause-opener {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    width: 80px;
-    @include circle-button;
-    z-index: 2;
-  }
 
   &__bottomsheet-opener {
     position: absolute;

@@ -2,18 +2,18 @@
   <div class="game-menu" v-if="game">
     <h3>Задание</h3>
     <div class="game-menu__task">
-      <p>{{ game.task.description }}</p>
+      <p>{{ game.task }}</p>
     </div>
 
     <h3>Кого ищем</h3>
     <div class="game-menu__gallery">
-      <img v-for="image in game.task.images" :key="image.id" :src="image.link" />
+      <img v-for="image in game.images" :key="image.id" :src="image.link" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 import { useGameStore } from '@/stores/game'
 import { storeToRefs } from 'pinia'
 
@@ -21,12 +21,9 @@ export default defineComponent({
   setup() {
     const gameStore = useGameStore()
     const { game } = storeToRefs(gameStore)
-    onMounted(() => {
-      console.log(game.value)
-    })
+
     return { game }
   }
-  // components: { BackButton }
 })
 </script>
 
