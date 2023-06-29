@@ -14,9 +14,9 @@ const game = {
     Помоги Кате вернуть их.`,
   images: [{ id: 1, link: '/level-1/shiba.jpg' }],
   items: [
-    { id: 1, coords: [ -8.552736, 115.274835], model: '/shiba/scene.gltf', isCatched: false },
-    { id: 2, coords: [-8.552712, 115.274941], model: '/shiba/scene.gltf', isCatched: false },
-    // { id: 3, coords: [-8.552557, 115.274879], model: '/shiba/scene.gltf', isCatched: false }
+    { id: 1, coords: [53.393251, 50.168719], model: '/shiba/scene.gltf', isCatched: false },
+    { id: 2, coords: [53.392678, 50.169080], model: '/shiba/scene.gltf', isCatched: false },
+    { id: 3, coords: [53.393115, 50.169466], model: '/shiba/scene.gltf', isCatched: false },
   ]
 }
 
@@ -32,7 +32,7 @@ export default defineComponent({
     onMounted(() => {
       getGame()
     })
-    
+
     return {}
   }
 })
