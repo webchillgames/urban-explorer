@@ -61,29 +61,8 @@ export default defineComponent({
       return props.items.map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
     })
 
-    const userMarker = computed((): L.Marker => {
-      const options = {
-        title: 'user point',
-        riseOnHover: true,
-        clickable: false,
-        interactive: true,
-        icon: myIcon
-      }
-      return L.marker({ lat: userLat.value, lng: userLong.value }, options)
-    })
-
-    function showUserPosition() {
-      if (map.value) {
-        const marker = userMarker.value
-        map.value.removeLayer(marker)
-        map.value.addLayer(marker)
-      }
-
-      // map.value.addTo(map.value as L.Map)
-    }
-
     watch(userLong, () => {
-      showUserPosition()
+      changeUserPinPosition()
     })
 
     function createMapContainer(mapRef: HTMLElement) {
@@ -114,13 +93,11 @@ export default defineComponent({
     }
 
     function error() {
-      alert('ошибка геолакации')
-      console.log('ошибка геолакации')
+      // alert('ошибка геолакации')
+      // console.log('ошибка геолакации')
     }
 
     function success(pos: GeolocationPosition) {
-      console.log(pos)
-
       const crd = pos.coords
       userLat.value = crd.latitude
       userLong.value = crd.longitude
@@ -128,10 +105,37 @@ export default defineComponent({
 
     navigator.geolocation.watchPosition(success, error, options)
 
+    const userMarker = computed((): L.Marker => {
+      const options = {
+        title: 'user point',
+        riseOnHover: true,
+        clickable: false,
+        interactive: true,
+        icon: myIcon
+      }
+      return L.marker({ lat: userLat.value, lng: userLong.value }, options)
+    })
+
+    const userMarkerId = userMarker.value
+
+    function setUserMarkerToMap() {
+      if (map.value) {
+        map.value.addLayer(userMarkerId)
+      }
+    }
+
+    function changeUserPinPosition() {
+      if (map.value && map.value.hasLayer(userMarkerId)) {
+        userMarkerId.setLatLng({ lat: userLat.value, lng: userLong.value })
+      }
+    }
+
     onMounted(() => {
       map.value = createMapContainer(mapRef.value)
+      navigator.geolocation.getCurrentPosition(success, error, options)
       setTileLayer(map.value)
       addMarkersToMap()
+      setUserMarkerToMap()
     })
 
     return { mapRef }
