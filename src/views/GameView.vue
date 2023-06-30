@@ -19,13 +19,13 @@ const game = {
   images: [{ id: 1, link: '/level-1/shiba.jpg' }],
   items: [
   
-    { id: 1, coords: [-8.552032, 115.274946], model: '/models/burger.glb', isCatched: false },
+    { id: 1, coords: [-8.552032, 115.274946], model: '/models/totoro.glb', isCatched: false },
     { id: 2, coords: [-8.551066, 115.274946], model: '/models/burger.glb', isCatched: false },
-    { id: 3, coords: [-8.551097, 115.275425], model: '/models/burger.glb', isCatched: false },
+    { id: 3, coords: [-8.551097, 115.275425], model: '/models/shiba/scene.gltf', isCatched: false },
     
-    { id: 4, coords: [-8.553079, 115.275151], model: '/models/burger.glb', isCatched: false },
-    { id: 5, coords: [-8.553184, 115.275161], model: '/models/burger.glb', isCatched: false },
-    { id: 6, coords: [8.553321, 115.275183], model: '/models/burger.glb', isCatched: false },
+    { id: 4, coords: [-8.553079, 115.275151], model: '/models/octopus.glb', isCatched: false },
+    { id: 5, coords: [-8.553184, 115.275161], model: '/models/octopus.glb', isCatched: false },
+    { id: 6, coords: [8.553321, 115.275183], model: '/models/octopus.glb', isCatched: false },
     
 
 
