@@ -149,8 +149,10 @@ export default defineComponent({
   overflow: hidden;
   width: 100%;
   height: 400px;
+  overflow: hidden;
 
   &__map {
+    border-radius: 8px;
     width: 100%;
     height: 100%;
   }

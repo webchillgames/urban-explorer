@@ -7,7 +7,7 @@ html,
 
 body {
     margin: 0;
-    font-family: $font-texts;
+    font-family: $font-texts, sans-serif;
     font-weight: 400px;
     font-size: 18px;
     line-height: 24px;
@@ -75,6 +75,11 @@ svg {
     }
 }
 
+h3 {
+    color: #fff;
+    text-shadow: 2px 2px $bg-1;
+  }
+
 .slide-fade-enter-active {
     transition: all 0.2s ease-out;
 }
@@ -87,4 +92,14 @@ svg {
 .slide-fade-leave-to {
     transform: translateX(20px);
     opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

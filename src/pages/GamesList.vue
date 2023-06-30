@@ -1,8 +1,9 @@
 <template>
   <div class="levels">
     <div class="wrapper">
-      <!-- <BackButton /> -->
+      <BackButton link="/" title="На главную" />
 
+      <h3>Список игр</h3>
       <ul>
         <li v-for="level in levels" :key="level.id">
           <GameCard :level="level" />
@@ -39,6 +40,10 @@ export default defineComponent({
 
   .wrapper {
     @include page;
+  }
+
+  h3 {
+    text-align: center;
   }
 
   ul {

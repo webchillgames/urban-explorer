@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
-import type {IItem} from '@/interfaces'
+import type { IItem } from '@/interfaces'
 
 export default defineComponent({
   emits: ['catchItem', 'finish'],
@@ -47,6 +47,7 @@ export default defineComponent({
           modelEl.classList.add('clickable')
           modelEl.setAttribute('look-at', '#camera')
           modelEl.setAttribute('scale', '2 2 2')
+          modelEl.setAttribute('animation-mixer', '')
 
           this.el.appendChild(modelEl)
         })
@@ -83,9 +84,12 @@ export default defineComponent({
         const scene = document.querySelector('a-scene')
         this.el.addEventListener('raycaster-intersected', (evt) => {
           const id = evt.target.getAttribute('id')
+          evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
 
           if (!reminder.value.length) {
-            ctx.emit('finish')
+            setTimeout(() => {
+              ctx.emit('finish')
+            }, 2000)
           }
 
           return items.value.forEach((item) => {
@@ -97,10 +101,12 @@ export default defineComponent({
                 const el = document.getElementById(`${item.id}`)
 
                 if (scene && el) {
-                  scene.removeChild(el)
+                  setTimeout(() => {
+                    
+                    ctx.emit('catchItem', reminder.value.length)
+                    scene.removeChild(el)
+                  }, 2000)
                 }
-
-                ctx.emit('catchItem', reminder.value.length)
               }
             }
           })

@@ -1,6 +1,16 @@
 <template>
   <div class="game-menu">
     <div class="wrapper">
+      <div class="game-menu__top">
+        <BackButton link="/games" title="К списку игр" />
+        <RouterLink
+          :to="`/game/${$router.currentRoute.value.params.id}/play`"
+          class="game-menu__go game-menu__go--link"
+        >
+          Go
+        </RouterLink>
+      </div>
+
       <div class="game-menu__tabs">
         <RouterLink
           :to="`/game/${$router.currentRoute.value.params.id}/menu/task`"
@@ -19,7 +29,11 @@
         </RouterLink>
       </div>
 
-      <RouterView />
+      <router-view v-slot="{ Component }">
+        <transition name="slide-fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
 
       <div class="game-menu__footer">
         <RouterLink
@@ -35,10 +49,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 import AppSvg from '@/elements/AppSvg.vue'
+import BackButton from '@/elements/BackButton.vue'
 
 export default defineComponent({
-  components: { AppSvg },
+  components: { AppSvg, BackButton },
   setup() {
     return {}
   }
@@ -52,39 +68,61 @@ export default defineComponent({
 
   .wrapper {
     @include page;
+    padding-top: 20px;
   }
 
-  &__footer {
-    padding-top: 40px;
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 12px;
+  }
 
-    a {
-      margin: 0 auto;
-      width: 200px;
-      display: block;
-      text-align: center;
-      font-family: $font-pixels;
-      background-color: $text-1;
-      text-decoration: none;
-      padding: 8px;
-      border-radius: 8px;
-      color: $text-3;
-      text-transform: uppercase;
-      transition: all 0.2s;
-      box-shadow: rgba($text-1, 0.4) 5px 5px, rgba($text-1, 0.3) 10px 10px,
-        rgba($text-1, 0.2) 15px 15px, rgba($text-1, 0.1) 20px 20px, rgba($text-1, 0.05) 25px 25px;
+  &__go {
+    margin: 0 auto;
+    width: 200px;
+    display: block;
+    text-align: center;
+    font-family: $font-pixels;
+    background-color: $text-1;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+    color: $text-3;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    box-shadow: rgba($text-1, 0.4) 5px 5px, rgba($text-1, 0.3) 10px 10px,
+      rgba($text-1, 0.2) 15px 15px, rgba($text-1, 0.1) 20px 20px, rgba($text-1, 0.05) 25px 25px;
+    @include flex;
 
-      &:hover {
-        box-shadow: none;
-      }
+    &:hover {
+      box-shadow: none;
+    }
 
-      &:active {
-        transform: scale(1.1);
+    &:active {
+      transform: scale(1.1);
+    }
+
+    &--link {
+      margin: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: rgba($text-1, 0.4) 1px 1px, rgba($text-1, 0.3) 3px 3px, rgba($text-1, 0.2) 6px 6px,
+        rgba($text-1, 0.1) 9px 9px, rgba($text-1, 0.05) 12px 12px;
+
+      .app-svg {
+        stroke: $text-3;
       }
     }
   }
 
+  &__footer {
+    padding-top: 40px;
+  }
+
   &__tabs {
     display: flex;
+    margin-top: 20px;
     margin-bottom: 40px;
 
     a {

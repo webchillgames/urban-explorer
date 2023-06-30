@@ -1,9 +1,9 @@
 <template>
   <div class="rocket">
-    <img src="rocket.png" class="rocket__rocket" />
-    <img src="blocks.png" class="rocket__blocks" />
-    <img src="flower.png" class="rocket__flower" />
-    <img src="spring.png" class="rocket__spring" />
+    <img src="/rocket/rocket.png" class="rocket__rocket" />
+    <img src="/rocket/blocks.png" class="rocket__blocks" />
+    <img src="/rocket/flower.png" class="rocket__flower" />
+    <img src="/rocket/spring.png" class="rocket__spring" />
     <svg
       class="rocket__stars"
       xmlns="http://www.w3.org/2000/svg"

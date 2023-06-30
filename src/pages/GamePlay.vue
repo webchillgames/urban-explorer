@@ -74,7 +74,7 @@ export default defineComponent({
     onMounted(() => {
       showMidResult.value = true
     })
-    
+
     return {
       restart,
       exit,

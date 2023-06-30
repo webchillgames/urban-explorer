@@ -1,7 +1,7 @@
 <template>
   <RouterLink :to="`/game/${level.id}/menu/task`" class="level-card">
     <div class="level-card__title">
-      <h3>{{ level.title }}</h3>
+      <h4>{{ level.title }}</h4>
       <div></div>
     </div>
     <div class="level-card__img">
@@ -48,7 +48,7 @@ export default defineComponent({
     transition: all 1s;
   }
 
-  h3 {
+  h4 {
     position: relative;
     z-index: 1;
     color: #000;
