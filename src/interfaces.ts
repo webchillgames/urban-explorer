@@ -1,3 +1,7 @@
+declare global {
+  const AFRAME: any;
+}
+
 export interface IPoint {
   coords: number[]
   id: number

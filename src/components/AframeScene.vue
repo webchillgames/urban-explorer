@@ -82,7 +82,7 @@ export default defineComponent({
     AFRAME.registerComponent('model', {
       init() {
         const scene = document.querySelector('a-scene')
-        this.el.addEventListener('raycaster-intersected', (evt) => {
+        this.el.addEventListener('raycaster-intersected', (evt: any) => {
           const id = evt.target.getAttribute('id')
           evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
 
@@ -117,7 +117,7 @@ export default defineComponent({
     AFRAME.registerComponent('user-camera', {
       init() {
         const raycaster = document.createElement('a-entity')
-        const svg = document.createElement('a-plane')
+        // const svg = document.createElement('a-plane')
         // svg.setAttribute('geometry', 'primitive: plane; width: 1; height: 1')
         // svg.setAttribute('material', 'src: url(/ilnur.jpg)')
 

@@ -26,11 +26,11 @@ export default defineComponent({
     const top = ref(window.innerHeight)
     const coordY = ref()
 
-    function start(evt) {
+    function start(evt: TouchEvent) {
       coordY.value = evt.touches[0].clientY
     }
 
-    function move(evt) {
+    function move(evt: TouchEvent) {
       if (coordY.value) {
         const newCoordY = evt.touches[0].clientY
 
