@@ -21,15 +21,24 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const zoom = ref(18)
+    const zoom = ref(15)
     const mapRef = ref()
     const map = ref<L.Map>()
 
     const userLat = ref(0)
     const userLong = ref(0)
 
-    const myIcon = L.icon({
-      iconUrl: '/src/assets/pin.png',
+    const pin = L.icon({
+      iconUrl: import.meta.env.BASE_URL + 'pin-item.png',
+      iconSize: [28, 55],
+      iconAnchor: [14, 54]
+      // popupAnchor: [-3, -76],
+      // shadowUrl: 'my-icon-shadow.png',
+      // shadowSize: [68, 95],
+      // shadowAnchor: [22, 94]
+    })
+    const userPin = L.icon({
+      iconUrl: import.meta.env.BASE_URL + 'pin.png',
       iconSize: [28, 55],
       iconAnchor: [14, 54]
       // popupAnchor: [-3, -76],
@@ -56,7 +65,8 @@ export default defineComponent({
         title: 'pickup point',
         riseOnHover: true,
         clickable: true,
-        interactive: true
+        interactive: true,
+        icon: pin
       }
       return props.items.map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
     })
@@ -111,7 +121,7 @@ export default defineComponent({
         riseOnHover: true,
         clickable: false,
         interactive: true,
-        icon: myIcon
+        icon: userPin
       }
       return L.marker({ lat: userLat.value, lng: userLong.value }, options)
     })

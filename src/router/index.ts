@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import HomeView from '@/views/HomeView.vue'
 import GameView from '@/views/GameView.vue'
@@ -10,7 +10,7 @@ import GamePlay from '@/pages/GamePlay.vue'
 import GameMenu from '@/pages/GameMenu.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',

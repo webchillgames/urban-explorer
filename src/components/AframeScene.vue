@@ -39,7 +39,7 @@ export default defineComponent({
           const modelEl = document.createElement('a-gltf-model')
           modelEl.setAttribute('model', '')
           modelEl.setAttribute('id', `${item.id}`)
-          modelEl.setAttribute('src', item.model)
+          modelEl.setAttribute('src', `${item.model}/scene.gltf`)
           modelEl.setAttribute(
             'gps-new-entity-place',
             `latitude: ${item.coords[0]}; longitude: ${item.coords[1]};`

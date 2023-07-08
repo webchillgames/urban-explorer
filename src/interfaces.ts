@@ -23,4 +23,11 @@ export interface IGame {
   task: string
   images: IImage[]
   items: IItem[]
+  title: string
+  id: number
+}
+
+export interface ILevel {
+  title: string
+  id: number
 }

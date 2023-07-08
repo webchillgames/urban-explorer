@@ -4,7 +4,7 @@
       <BackButton link="/" title="На главную" />
 
       <h3>Список игр</h3>
-      <ul>
+      <ul v-if="levels">
         <li v-for="level in levels" :key="level.id">
           <GameCard :level="level" />
         </li>
@@ -14,19 +14,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { customAxios } from '@/axios'
+import type { ILevel, IGame } from '@/interfaces'
+
 import GameCard from '@/elements/GameCard.vue'
 import BackButton from '@/elements/BackButton.vue'
 
-const levels = [
-  { id: 1, title: 'level 1', img: 'level-1.jpg', data: {} },
-  { id: 2, title: 'level 2', img: 'level-2.jpg', data: {} },
-  { id: 3, title: 'level 3', img: 'level-3.jpg', data: {} },
-  { id: 4, title: 'level 4', img: 'level-4.jpg', data: {} }
-]
-
 export default defineComponent({
   setup() {
+    const levels = ref<ILevel[]>([])
+
+    async function getGame() {
+      try {
+        const levels = await customAxios.get('levels')
+
+        return levels.data
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    onMounted(async () => {
+      levels.value = await getGame()
+    })
+
     return { levels }
   },
   components: { GameCard, BackButton }
