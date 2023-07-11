@@ -109,8 +109,8 @@ export default defineComponent({
 
     function success(pos: GeolocationPosition) {
       const crd = pos.coords
-      userLat.value = crd.latitude
-      userLong.value = crd.longitude
+      // userLat.value = crd.latitude
+      // userLong.value = crd.longitude
     }
 
     navigator.geolocation.watchPosition(success, error, options)
@@ -124,6 +124,7 @@ export default defineComponent({
         icon: userPin
       }
       return L.marker({ lat: userLat.value, lng: userLong.value }, options)
+      
     })
 
     const userMarkerId = userMarker.value

@@ -6,7 +6,7 @@
       <h3>Список игр</h3>
       <ul v-if="levels">
         <li v-for="level in levels" :key="level.id">
-          <GameCard :level="level" />
+          <GameCard v-if="level" :level="level" />
         </li>
       </ul>
     </div>
@@ -28,8 +28,8 @@ export default defineComponent({
     async function getGame() {
       try {
         const levels = await customAxios.get('levels')
-
-        return levels.data
+        // Это какая то дичь
+        return levels.data.filter((_: IGame, i: number) => i !== 0)
       } catch (e) {
         console.log(e)
       }
@@ -64,6 +64,8 @@ export default defineComponent({
     flex-wrap: wrap;
     justify-content: center;
     padding: 0;
+    padding: 4px;
+    
   }
 
   &__back {

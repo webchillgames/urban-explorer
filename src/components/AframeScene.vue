@@ -5,10 +5,22 @@
     arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
     renderer="antialias: true; alpha: true"
   >
-    <a-camera
+    <!-- <a-camera
       user-camera
       id="camera"
       gps-new-camera
+      rotation-reader
+      look-controls-enabled
+      look-controls
+      reverse-mouse-drag
+    ></a-camera> -->
+
+    <!-- камера для тестов  -->
+
+    <a-camera
+      user-camera
+      id="camera"
+      gps-new-camera="simulateLatitude:-8.552632;simulateLongitude: 115.274825"
       rotation-reader
       look-controls-enabled
       look-controls
@@ -35,21 +47,42 @@ export default defineComponent({
 
     AFRAME.registerComponent('scene', {
       init() {
+        // alert('началось')
         items.value.forEach((item: IItem) => {
-          const modelEl = document.createElement('a-gltf-model')
-          modelEl.setAttribute('model', '')
-          modelEl.setAttribute('id', `${item.id}`)
-          modelEl.setAttribute('src', `${item.model}/scene.gltf`)
-          modelEl.setAttribute(
-            'gps-new-entity-place',
-            `latitude: ${item.coords[0]}; longitude: ${item.coords[1]};`
-          )
-          modelEl.classList.add('clickable')
-          modelEl.setAttribute('look-at', '#camera')
-          modelEl.setAttribute('scale', '2 2 2')
-          modelEl.setAttribute('animation-mixer', '')
+          if (item.isShow) {
+            const modelEl = document.createElement('a-gltf-model')
+            const parentToRotate = document.createElement('a-entity')
+            modelEl.setAttribute('model', '')
+            modelEl.setAttribute('id', `${item.id}`)
+            modelEl.setAttribute('src', `${item.model}/scene.gltf`)
+            parentToRotate.setAttribute(
+              'gps-new-entity-place',
+              `latitude: ${item.coords[0]}; longitude: ${item.coords[1]};`
+            )
+            modelEl.classList.add('clickable')
+           
 
-          this.el.appendChild(modelEl)
+            if (item.scale) {
+              modelEl.setAttribute('scale', item.scale)
+            } else {
+              modelEl.setAttribute('scale', '1 1 1')
+            }
+
+            if (item.rotation) {
+              console.log('имеется поворот');
+              
+              modelEl.setAttribute('rotation', item.rotation)
+            } else {
+              modelEl.setAttribute('rotation', '0 0 0')
+            
+            }
+            // modelEl.setAttribute('look-at', '#camera')
+            modelEl.setAttribute('animation-mixer', '')
+            parentToRotate.appendChild(modelEl)
+            this.el.appendChild(parentToRotate)
+          }
+
+          // alert('Подгрузилась')
         })
       }
     })
@@ -82,35 +115,35 @@ export default defineComponent({
     AFRAME.registerComponent('model', {
       init() {
         const scene = document.querySelector('a-scene')
-        this.el.addEventListener('raycaster-intersected', (evt: any) => {
-          const id = evt.target.getAttribute('id')
-          evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
+        // this.el.addEventListener('raycaster-intersected', (evt: any) => {
+        //   const id = evt.target.getAttribute('id')
+        //   evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
 
-          if (!reminder.value.length) {
-            setTimeout(() => {
-              ctx.emit('finish')
-            }, 2000)
-          }
+        //   if (!reminder.value.length) {
+        //     setTimeout(() => {
+        //       ctx.emit('finish')
+        //     }, 2000)
+        //   }
 
-          return items.value.forEach((item) => {
-            if (item.id === Number(id)) {
-              if (item.isCatched) {
-                return
-              } else {
-                item.isCatched = true
-                const el = document.getElementById(`${item.id}`)
+        //   return items.value.forEach((item) => {
+        //     if (item.id === Number(id)) {
+        //       if (item.isCatched) {
+        //         return
+        //       } else {
+        //         item.isCatched = true
+        //         const el = document.getElementById(`${item.id}`)
 
-                if (scene && el) {
-                  setTimeout(() => {
-                    
-                    ctx.emit('catchItem', reminder.value.length)
-                    scene.removeChild(el)
-                  }, 2000)
-                }
-              }
-            }
-          })
-        })
+        //         if (scene && el) {
+        //           setTimeout(() => {
+
+        //             ctx.emit('catchItem', reminder.value.length)
+        //             scene.removeChild(el)
+        //           }, 2000)
+        //         }
+        //       }
+        //     }
+        //   })
+        // })
       }
     })
 

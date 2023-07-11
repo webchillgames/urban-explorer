@@ -12,6 +12,9 @@ export interface IItem {
   coords: number[]
   model: string
   isCatched: boolean
+  scale: string
+  isShow: boolean
+  rotation: string
 }
 
 export interface IImage {
@@ -25,6 +28,7 @@ export interface IGame {
   items: IItem[]
   title: string
   id: number
+
 }
 
 export interface ILevel {
