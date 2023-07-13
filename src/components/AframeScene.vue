@@ -69,14 +69,18 @@ export default defineComponent({
             }
 
             if (item.rotation) {
-              console.log('имеется поворот');
-              
+              console.log(item.rotation);
+              modelEl.setAttribute('rotation-component', '')
+       
               modelEl.setAttribute('rotation', item.rotation)
             } else {
               modelEl.setAttribute('rotation', '0 0 0')
-            
+              // modelEl.setAttribute('look-at', '#camera')
             }
-            // modelEl.setAttribute('look-at', '#camera')
+
+            if (item.position) {
+              modelEl.setAttribute('position', item.position)
+            }
             modelEl.setAttribute('animation-mixer', '')
             parentToRotate.appendChild(modelEl)
             this.el.appendChild(parentToRotate)

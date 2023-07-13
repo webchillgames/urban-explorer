@@ -15,6 +15,7 @@ export interface IItem {
   scale: string
   isShow: boolean
   rotation: string
+  position: string
 }
 
 export interface IImage {
