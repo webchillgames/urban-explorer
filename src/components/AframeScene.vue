@@ -20,7 +20,7 @@
     <a-camera
       user-camera
       id="camera"
-      gps-new-camera="simulateLatitude:-8.552632;simulateLongitude: 115.274825"
+      gps-new-camera="simulateLatitude:25.067935;simulateLongitude: 55.138646"
       rotation-reader
       look-controls-enabled
       look-controls
@@ -60,7 +60,6 @@ export default defineComponent({
               `latitude: ${item.coords[0]}; longitude: ${item.coords[1]};`
             )
             modelEl.classList.add('clickable')
-           
 
             if (item.scale) {
               modelEl.setAttribute('scale', item.scale)
@@ -69,9 +68,8 @@ export default defineComponent({
             }
 
             if (item.rotation) {
-              console.log(item.rotation);
+              console.log(item.id, item.rotation)
               modelEl.setAttribute('rotation-component', '')
-       
               modelEl.setAttribute('rotation', item.rotation)
             } else {
               modelEl.setAttribute('rotation', '0 0 0')
@@ -81,7 +79,7 @@ export default defineComponent({
             if (item.position) {
               modelEl.setAttribute('position', item.position)
             }
-            modelEl.setAttribute('animation-mixer', '')
+            // modelEl.setAttribute('animation-mixer', '')
             parentToRotate.appendChild(modelEl)
             this.el.appendChild(parentToRotate)
           }
@@ -119,35 +117,37 @@ export default defineComponent({
     AFRAME.registerComponent('model', {
       init() {
         const scene = document.querySelector('a-scene')
-        // this.el.addEventListener('raycaster-intersected', (evt: any) => {
-        //   const id = evt.target.getAttribute('id')
-        //   evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
+        this.el.addEventListener('raycaster-intersected', (evt: any) => {
+          const id = evt.target.getAttribute('id')
+          console.log(6666666);
+          
+          // evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
 
-        //   if (!reminder.value.length) {
-        //     setTimeout(() => {
-        //       ctx.emit('finish')
-        //     }, 2000)
-        //   }
+          if (!reminder.value.length) {
+            setTimeout(() => {
+              ctx.emit('finish')
+            }, 2000)
+          }
 
-        //   return items.value.forEach((item) => {
-        //     if (item.id === Number(id)) {
-        //       if (item.isCatched) {
-        //         return
-        //       } else {
-        //         item.isCatched = true
-        //         const el = document.getElementById(`${item.id}`)
+          return items.value.forEach((item) => {
+            if (item.id === Number(id)) {
+              if (item.isCatched) {
+                return
+              } else {
+                item.isCatched = true
+                const el = document.getElementById(`${item.id}`)
 
-        //         if (scene && el) {
-        //           setTimeout(() => {
+                if (scene && el) {
+                  setTimeout(() => {
 
-        //             ctx.emit('catchItem', reminder.value.length)
-        //             scene.removeChild(el)
-        //           }, 2000)
-        //         }
-        //       }
-        //     }
-        //   })
-        // })
+                    ctx.emit('catchItem', reminder.value.length)
+                    scene.removeChild(el)
+                  }, 2000)
+                }
+              }
+            }
+          })
+        })
       }
     })
 

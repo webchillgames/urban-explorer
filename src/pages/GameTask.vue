@@ -5,10 +5,10 @@
       <p>{{ game.task }}</p>
     </div>
 
-    <h3>Кого ищем</h3>
+    <!-- <h3>Кого ищем</h3>
     <div class="game-menu__gallery">
       <img v-for="image in game.images" :key="image.id" :src="image.link" />
-    </div>
+    </div> -->
   </div>
 </template>
 
