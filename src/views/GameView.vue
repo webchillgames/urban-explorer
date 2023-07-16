@@ -30,10 +30,8 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      getGame()
-      console.log(33);
-      
+    onMounted(async() => {
+      await getGame()      
     })
 
     return {}

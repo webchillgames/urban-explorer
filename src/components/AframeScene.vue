@@ -44,10 +44,10 @@ export default defineComponent({
   setup(props, ctx) {
     const items = computed(() => props.items)
     const reminder = computed(() => items.value.filter((v: IItem) => v.isCatched === false))
-    
+
     function createModelElement(item: IItem) {
-      console.log(555, item, item.id);
-      
+      console.log(555, item, item.id)
+
       const modelEl = document.createElement('a-gltf-model')
       const modelWrapper = document.createElement('a-entity')
       modelEl.setAttribute('model', '')
@@ -87,7 +87,7 @@ export default defineComponent({
     AFRAME.registerComponent('scene', {
       init() {
         items.value.forEach((item: IItem) => {
-          if (item.isShow) {           
+          if (item.isShow) {
             this.el.appendChild(createModelElement(item))
           }
         })
@@ -95,7 +95,7 @@ export default defineComponent({
     })
 
     AFRAME.registerComponent('user-raycaster', {
-      dependencies: ['raycaster'],
+      dependencies: ['raycaster']
       // init() {
       //   this.el.addEventListener('raycaster-intersection', function (evt) {
       //     console.log('raycaster-intersection')
@@ -119,23 +119,23 @@ export default defineComponent({
               ctx.emit('finish')
             }, 2000)
           }
-console.log(evt.target);
 
           return items.value.forEach((item) => {
             if (item.id === id) {
               if (item.isCatched) {
                 return
               } else {
-                console.log('catched');
-                
                 item.isCatched = true
                 const el = document.getElementById(`${item.id}`)
+                ctx.emit('catchItem', reminder.value.length)
 
                 if (scene && el) {
-                  setTimeout(() => {
-                    ctx.emit('catchItem', reminder.value.length)
-                    scene.removeChild(el)
-                  }, 2000)
+                  ctx.emit('catchItem', reminder.value.length)
+                  // scene.removeChild(el)
+                  // setTimeout(() => {
+                  //   ctx.emit('catchItem', reminder.value.length)
+                  //   scene.removeChild(el)
+                  // }, 1000)
                 }
               }
             }
