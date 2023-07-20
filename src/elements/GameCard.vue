@@ -5,7 +5,7 @@
       <div></div>
     </div>
     <div class="level-card__img">
-      <img v-if="level.img" :src="level.img"  />
+      <img src="bg.jpg"  />
     </div>
   </RouterLink>
 </template>

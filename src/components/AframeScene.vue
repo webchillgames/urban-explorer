@@ -5,7 +5,7 @@
     arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
     renderer="antialias: true; alpha: true"
   >
-    <a-camera
+    <!-- <a-camera
       user-camera
       id="camera"
       gps-new-camera
@@ -13,19 +13,19 @@
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera>
+    ></a-camera> -->
 
     <!-- камера для тестов  -->
 
-    <!-- <a-camera
+    <a-camera
       user-camera
       id="camera"
-      gps-new-camera="simulateLatitude:25.067935;simulateLongitude: 55.138646"
+      gps-new-camera="simulateLatitude:-6.935598;simulateLongitude:  107.681367"
       rotation-reader
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera> -->
+    ></a-camera>
   </a-scene>
 </template>
 
@@ -46,7 +46,7 @@ export default defineComponent({
     const reminder = computed(() => items.value.filter((v: IItem) => v.isCatched === false))
 
     function createModelElement(item: IItem) {
-      console.log(555, item, item.id)
+      console.log('Прогрузилась моделька')
 
       const modelEl = document.createElement('a-gltf-model')
       const modelWrapper = document.createElement('a-entity')
@@ -70,7 +70,7 @@ export default defineComponent({
         modelEl.setAttribute('rotation', item.rotation)
       } else {
         modelEl.setAttribute('rotation', '0 0 0')
-        // modelEl.setAttribute('look-at', '#camera')
+        modelEl.setAttribute('look-at', '#camera')
       }
 
       if (item.position) {
@@ -95,16 +95,12 @@ export default defineComponent({
     })
 
     AFRAME.registerComponent('user-raycaster', {
-      dependencies: ['raycaster']
-      // init() {
-      //   this.el.addEventListener('raycaster-intersection', function (evt) {
-      //     console.log('raycaster-intersection')
-      //   })
-
-      //   this.el.addEventListener('raycaster-intersected-cleared', (evt) => {
-      //     this.raycaster = null
-      //   })
-      // },
+      dependencies: ['raycaster'],
+      init: function () {
+        this.el.addEventListener('raycaster-intersection', function () {
+          console.log('Player hit something!')
+        })
+      }
     })
 
     AFRAME.registerComponent('model', {
@@ -112,7 +108,7 @@ export default defineComponent({
         const scene = document.querySelector('a-scene')
         this.el.addEventListener('raycaster-intersected', (evt: any) => {
           const id = evt.target.getAttribute('id')
-          // evt.target.setAttribute('animation', 'property: scale; to: 0; loop: false; dur: 1000')
+          console.log('raycaster-intersected')
 
           if (!reminder.value.length) {
             setTimeout(() => {
@@ -125,12 +121,17 @@ export default defineComponent({
               if (item.isCatched) {
                 return
               } else {
+                console.log('catched')
+
                 item.isCatched = true
                 const el = document.getElementById(`${item.id}`)
                 ctx.emit('catchItem', reminder.value.length)
 
                 if (scene && el) {
                   ctx.emit('catchItem', reminder.value.length)
+                  scene?.removeChild(el)
+                  console.log(el)
+
                   // scene.removeChild(el)
                   // setTimeout(() => {
                   //   ctx.emit('catchItem', reminder.value.length)

@@ -1,45 +1,57 @@
 {
     "1": {
-        "id": 1,
+        "id": "1",
+        "task": "Hello, Akbar! I'm glad to see you here. Go walk together with my little game. Today^ you should to find cyber 3D models",
+        "title": "Special for Akbar",
         "items": [
             {
-                "coords": [25.065275, 55.138239],
+                "id": "1",
+                "coords": [
+                    -6.935614, 107.681370
+                ],
                 "isCatched": false,
-                "model": "anime-tyan-1",
-                "scale": "4 4 4",
+                "model": "mech_drone",
+                "scale": "100 100 100",
                 "position": "0 0 0",
                 "rotation": "0 0 0",
                 "isShow": true
             },
             {
-                "coords": [25.066559, 55.138655],
+                "id": "2",
+                "coords": [
+                    -6.935518, 107.681106
+                ],
                 "isCatched": false,
-                "model": "anime-tyan-2",
-                "scale": "0.1 0.1 0.1",
+                "model": "mech_drone",
+                "scale": "100 100 100",
                 "position": "0 0 0",
                 "rotation": "0 0 0",
                 "isShow": true
             },
             {
-                "coords": [25.067707, 55.138789],
+                "id": "3",
+                "coords": [
+                    -6.935405, 107.680707
+                ],
                 "isCatched": false,
-                "model": "anime-tyan-3",
-                "scale": "3 3 3",
+                "model": "mech_drone",
+                "scale": "100 100 100",
                 "position": "0 0 0",
-                "rotation": "0 270 0",
+                "rotation": "0 0 0",
                 "isShow": true
             },
             {
-                "coords": [25.067954, 55.138643],
+                "id": "4",
+                "coords": [
+                    -6.935849, 107.681326
+                ],
                 "isCatched": false,
-                "model": "shiba",
-                "scale": "4 4 4",
+                "model": "mech_drone",
+                "scale": "100 100 100",
                 "position": "0 0 0",
                 "rotation": "0 0 0",
                 "isShow": true
             }
-        ],
-        "task": "Привет! Ну что, пойдем прогуляемся немного. Реально немного. Я чекнула путь по гугл карте. Потому что помню про развилки и сложности при переходе дорог в Дубай. Надеюсь, это будет хотя-бы чуток развлекательно. Отличной прогулки!",
-        "title": "Спешл для Андрея"
+        ]
     }
 }
