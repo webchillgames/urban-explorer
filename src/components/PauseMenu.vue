@@ -7,23 +7,24 @@
 
       <button type="button" class="pause-menu__button-text" @click="$emit('unpaused')">
         <img src="/ui/block-button.png" />
-        <span>Play</span>
+        <span>{{ t('play') }}</span>
       </button>
 
       <button type="button" class="pause-menu__button-text" @click="$emit('restart')">
         <img src="/ui/block-button.png" />
-        <span>Restart</span>
+        <span>{{ t('restart') }}</span>
       </button>
 
       <button type="button" class="pause-menu__button-text" @click="$emit('exit')">
         <img src="/ui/block-button.png" />
-        <span>Выход</span>
+        <span>{{ t('exit') }}</span>
       </button>
     </div>
   </GameModal>
 </template>
 
 <script lang="ts">
+import { t } from '@/translator'
 import GameModal from './GameModal.vue'
 import { defineComponent } from 'vue'
 
@@ -31,7 +32,7 @@ export default defineComponent({
   emits: ['unpaused', 'exit', 'restart'],
 
   setup() {
-    return {}
+    return { t }
   },
   components: { GameModal }
 })

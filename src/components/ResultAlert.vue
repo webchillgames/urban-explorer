@@ -1,7 +1,7 @@
 <template>
   <GameModal :hasOverlay="false" :hasStars="true">
     <div class="result-alert">
-      <h3>Осталось найти</h3>
+      <h3>{{ t('left.to.find') }}</h3>
 
       <WhiteCircle class="result-alert__reminder">
         <span>{{ calcLastItems }}</span>
@@ -9,7 +9,7 @@
 
       <button type="button" @click="$emit('close')">
         <img src="/ui/block-button.png" />
-        <span>Понятно</span>
+        <span>OK</span>
       </button>
     </div>
   </GameModal>
@@ -22,6 +22,7 @@ import { defineComponent } from 'vue'
 
 import GameModal from './GameModal.vue'
 import WhiteCircle from '@/elements/WhiteCircle.vue'
+import { t } from '@/translator'
 
 export default defineComponent({
   emits: ['close'],
@@ -29,7 +30,7 @@ export default defineComponent({
     const gameStore = useGameStore()
     const { calcLastItems } = storeToRefs(gameStore)
 
-    return { calcLastItems }
+    return { calcLastItems, t }
   },
   components: { GameModal, WhiteCircle }
 })

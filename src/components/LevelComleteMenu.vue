@@ -7,7 +7,7 @@
 
       <button type="button" class="level-complete-menu__button-text" @click="$emit('exit')">
         <img src="/ui/block-button.png" />
-        <span>Exit</span>
+        <span>{{ t('exit') }}</span>
       </button>
     </div>
   </GameModal>
@@ -16,10 +16,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import GameModal from './GameModal.vue'
+import { t } from '@/translator'
 
 export default defineComponent({
   setup() {
-    return {}
+    return { t }
   },
   components: { GameModal }
 })

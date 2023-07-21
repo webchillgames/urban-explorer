@@ -2,7 +2,7 @@
   <div class="game-menu">
     <div class="wrapper">
       <div class="game-menu__top">
-        <BackButton link="/games" title="К списку игр" />
+        <BackButton link="/games" :title="t('to.games')" />
         <RouterLink
           :to="`/game/${$router.currentRoute.value.params.id}/play`"
           class="game-menu__go game-menu__go--link"
@@ -17,7 +17,7 @@
           :class="{ active: $router.currentRoute.value.fullPath.includes('task') }"
         >
           <AppSvg link="rocket" />
-          <span>Задание</span>
+          <span>{{ t('task') }}</span>
         </RouterLink>
 
         <RouterLink
@@ -25,7 +25,7 @@
           :class="{ active: $router.currentRoute.value.fullPath.includes('map') }"
         >
           <AppSvg link="map-pin" />
-          <span>Карта</span>
+          <span>{{ t('map') }}</span>
         </RouterLink>
       </div>
 
@@ -40,7 +40,7 @@
           :to="`/game/${$router.currentRoute.value.params.id}/play`"
           class="game-menu__go"
         >
-          Играть
+          {{ t('play') }}
         </RouterLink>
       </div>
     </div>
@@ -52,11 +52,12 @@ import { defineComponent } from 'vue'
 
 import AppSvg from '@/elements/AppSvg.vue'
 import BackButton from '@/elements/BackButton.vue'
+import { t } from '@/translator'
 
 export default defineComponent({
   components: { AppSvg, BackButton },
   setup() {
-    return {}
+    return {t}
   }
 })
 </script>
@@ -68,7 +69,6 @@ export default defineComponent({
 
   .wrapper {
     @include page;
-    padding-top: 20px;
   }
 
   &__top {

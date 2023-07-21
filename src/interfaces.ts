@@ -4,11 +4,11 @@ declare global {
 
 export interface IPoint {
   coords: number[]
-  id: number
+  id: string
 }
 
 export interface IItem {
-  id: number
+  id: string
   coords: number[]
   model: string
   isCatched: boolean
@@ -25,11 +25,9 @@ export interface IImage {
 
 export interface IGame {
   task: string
-  images: IImage[]
   items: IItem[]
   title: string
-  id: number
-
+  id: string
 }
 
 export interface ILevel {

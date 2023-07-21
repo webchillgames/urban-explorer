@@ -69,7 +69,7 @@ export default defineComponent({
         modelEl.setAttribute('rotation-component', '')
         modelEl.setAttribute('rotation', item.rotation)
       } else {
-        modelEl.setAttribute('rotation', '0 0 0')
+        // modelEl.setAttribute('rotation', '0 0 0')
         modelEl.setAttribute('look-at', '#camera')
       }
 

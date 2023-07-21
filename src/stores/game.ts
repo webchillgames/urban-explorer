@@ -1,20 +1,31 @@
-import type { IItem, IGame, IImage } from '@/interfaces'
+import type { IItem, IGame } from '@/interfaces'
 import { defineStore } from 'pinia'
 
 export const useGameStore = defineStore('game', {
   state: () => ({
     game: {
-      images: [] as IImage[],
+      id: '',
       task: '' as String,
-      items: [] as IItem[]
+      items: [] as IItem[],
+      title: ''
     }
   }),
   getters: {
-    calcLastItems: (state) => state.game.items.filter((v) => (v.isCatched === false)).length
+    calcLastItems: (state) => state.game.items.filter((v) => v.isCatched === false).length
   },
   actions: {
     setCurrentGame(v: IGame) {
-      this.game = v
+      this.game.id = v.id
+      this.game.items = v.items
+      this.game.title = v.title
+      this.game.task = v.task
+    },
+    setCatchStatus(id: string) {
+      this.game.items.forEach((v) => {
+        if (v.id === id) {
+          v.isCatched = true
+        }
+      })
     },
     clearResults() {
       this.game.items.forEach((v) => {

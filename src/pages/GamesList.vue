@@ -1,9 +1,9 @@
 <template>
   <div class="levels">
     <div class="wrapper">
-      <BackButton link="/" title="На главную" />
+      <BackButton link="/" :title="t('to.main')" />
 
-      <h3>Список игр</h3>
+      <h3>{{ t('games') }}</h3>
       <ul v-if="levels">
         <li v-for="level in levels" :key="level.id">
           <GameCard v-if="level" :level="level" />
@@ -20,6 +20,7 @@ import type { ILevel, IGame } from '@/interfaces'
 
 import GameCard from '@/elements/GameCard.vue'
 import BackButton from '@/elements/BackButton.vue'
+import { t } from '@/translator'
 
 export default defineComponent({
   setup() {
@@ -39,7 +40,7 @@ export default defineComponent({
       levels.value = await getGame()
     })
 
-    return { levels }
+    return { levels, t }
   },
   components: { GameCard, BackButton }
 })
