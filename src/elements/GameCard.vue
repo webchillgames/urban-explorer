@@ -5,7 +5,7 @@
       <div></div>
     </div>
     <div class="level-card__img">
-      <img src="bg.jpg"  />
+      <img src="/bg.jpg"  />
     </div>
   </RouterLink>
 </template>

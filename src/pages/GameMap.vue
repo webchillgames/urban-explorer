@@ -3,11 +3,11 @@
     <div class="game-map__tip">
       {{ t('map.tip') }}
       <div class="game-map__pin">
-        <img src="pin.png" />
+        <img src="/pin.png" />
         <span>{{ t('you') }}</span>
       </div>
       <div class="game-map__pin">
-        <img src="pin-item.png" />
+        <img src="/pin-item.png" />
         <span>{{ t('model') }}</span>
       </div>
     </div>
