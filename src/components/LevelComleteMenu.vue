@@ -5,10 +5,7 @@
         <img src="/ui/level_complete.png" />
       </div>
 
-      <button type="button" class="level-complete-menu__button-text" @click="$emit('exit')">
-        <img src="/ui/block-button.png" />
-        <span>{{ t('exit') }}</span>
-      </button>
+      <AppButton :title="t('exit')" @click="$emit('exit')" />
     </div>
   </GameModal>
 </template>
@@ -17,12 +14,13 @@
 import { defineComponent } from 'vue'
 import GameModal from './GameModal.vue'
 import { t } from '@/translator'
+import AppButton from '@/elements/AppButton.vue'
 
 export default defineComponent({
   setup() {
     return { t }
   },
-  components: { GameModal }
+  components: { GameModal, AppButton }
 })
 </script>
 
@@ -34,8 +32,7 @@ export default defineComponent({
     @include title-image;
   }
 
-  &__button-text {
-    @include button-text;
+  button {
     margin: 0 auto;
   }
 }

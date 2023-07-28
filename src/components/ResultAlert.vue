@@ -7,10 +7,7 @@
         <span>{{ calcLastItems }}</span>
       </WhiteCircle>
 
-      <button type="button" @click="$emit('close')">
-        <img src="/ui/block-button.png" />
-        <span>OK</span>
-      </button>
+      <AppButtonVue title="OK" @click="$emit('close')" />
     </div>
   </GameModal>
 </template>
@@ -23,6 +20,7 @@ import { defineComponent } from 'vue'
 import GameModal from './GameModal.vue'
 import WhiteCircle from '@/elements/WhiteCircle.vue'
 import { t } from '@/translator'
+import AppButtonVue from '@/elements/AppButton.vue'
 
 export default defineComponent({
   emits: ['close'],
@@ -32,7 +30,7 @@ export default defineComponent({
 
     return { calcLastItems, t }
   },
-  components: { GameModal, WhiteCircle }
+  components: { GameModal, WhiteCircle, AppButtonVue }
 })
 </script>
 
@@ -41,7 +39,6 @@ export default defineComponent({
   text-align: center;
 
   button {
-    @include button-text;
     margin: 0 auto;
     margin-top: 40px;
   }

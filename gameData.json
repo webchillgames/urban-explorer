@@ -1,54 +1,91 @@
 {
     "1": {
         "id": "1",
-        "task": "Hello, Akbar! I'm glad to see you here. Go walk together with my little game. Today^ you should to find cyber 3D models",
-        "title": "Special for Akbar",
+        "task": "Hello, Akbar! I'm glad to see you here. Go walk together with my little game. Today you should to find some 3D models",
+        "title": "Special for my friend Akbar",
         "items": [
             {
                 "id": "1",
                 "coords": [
-                    -6.935614, 107.681370
+                    -6.935503,
+                    107.681075
                 ],
                 "isCatched": false,
-                "model": "mech_drone",
-                "scale": "100 100 100",
-                "position": "0 0 0",
+                "model": "anime-tyan-1",
+                "scale": "2 2 2",
+                "position": "0 0 -3",
                 "rotation": "0 0 0",
                 "isShow": true
             },
             {
                 "id": "2",
                 "coords": [
-                    -6.935518, 107.681106
+                    -6.935468,
+                    107.680731
                 ],
                 "isCatched": false,
-                "model": "mech_drone",
-                "scale": "100 100 100",
-                "position": "0 0 0",
+                "model": "anime-tyan-2",
+                "scale": "2 2 2",
+                "position": "0 0 -3",
                 "rotation": "0 0 0",
                 "isShow": true
             },
             {
                 "id": "3",
                 "coords": [
-                    -6.935405, 107.680707
+                    -6.935197,
+                    107.680664
                 ],
                 "isCatched": false,
-                "model": "mech_drone",
-                "scale": "100 100 100",
-                "position": "0 0 0",
+                "model": "anime-tyan-3",
+                "scale": "2 2 2",
+                "position": "0 0 -3",
+                "rotation": "0 0 0",
+                "isShow": true
+            }
+        ]
+    },
+    "2": {
+        "id": "2",
+        "task": "Hello, Akbar! I'm glad to see you here. Go walk together with my little game. Today^ you should to find cyber 3D models",
+        "title": "Special for Akbar",
+        "items": [
+            {
+                "id": "1",
+                "coords": [
+                    -8.552673,
+                    115.274834
+                ],
+                "isCatched": false,
+                "model": "anime-tyan-1",
+                "scale": "2 2 2",
+                "position": "0 0 -3",
                 "rotation": "0 0 0",
                 "isShow": true
             },
             {
-                "id": "4",
+                "id": "2",
                 "coords": [
-                    -6.935849, 107.681326
+                    -8.552673,
+                    115.274666
                 ],
                 "isCatched": false,
-                "model": "mech_drone",
-                "scale": "100 100 100",
-                "position": "0 0 0",
+                "model": "anime-tyan-2",
+                "scale": "2 2 2",
+                "position": "0 0 -3",
+                "rotation": "0 0 0",
+                "isShow": true
+            },
+            {
+                "id": "3",
+                "coords": [
+                    8.552690,
+                    115.274961
+                ],
+                "isCatched": false,
+                "model": "anime-tyan-3",
+                "scale": "2 2 2",
+                "position": "0 0 -3",
                 "rotation": "0 0 0",
                 "isShow": true
             }

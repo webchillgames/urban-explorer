@@ -5,7 +5,7 @@
     arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
     renderer="antialias: true; alpha: true"
   >
-    <!-- <a-camera
+    <a-camera
       user-camera
       id="camera"
       gps-new-camera
@@ -13,28 +13,28 @@
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera> -->
+    ></a-camera>
 
     <!-- камера для тестов  -->
 
-    <a-camera
+    <!-- <a-camera
       user-camera
       id="camera"
-      gps-new-camera="simulateLatitude:-6.935598;simulateLongitude:  107.681367"
+      gps-new-camera="simulateLatitude:-6.935503;simulateLongitude:107.681075"
       rotation-reader
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera>
+    ></a-camera> -->
   </a-scene>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue'
+import { computed, defineComponent, ref, type PropType, watch } from 'vue'
 import type { IItem } from '@/interfaces'
 
 export default defineComponent({
-  emits: ['catchItem', 'finish'],
+  emits: ['catchItem', 'finish', 'intersectionCleared'],
   props: {
     items: {
       type: Array as PropType<IItem[]>,
@@ -44,10 +44,17 @@ export default defineComponent({
   setup(props, ctx) {
     const items = computed(() => props.items)
     const reminder = computed(() => items.value.filter((v: IItem) => v.isCatched === false))
+    const itemsLoaded = ref(0)
+
+    watch(itemsLoaded, (v) => {
+      if (v === items.value.length) {
+        console.log('по идее все подгрузились')
+        const models = document.querySelectorAll('.clickable')
+        console.log('нашло вот столько', models.length)
+      }
+    })
 
     function createModelElement(item: IItem) {
-      console.log('Прогрузилась моделька')
-
       const modelEl = document.createElement('a-gltf-model')
       const modelWrapper = document.createElement('a-entity')
       modelEl.setAttribute('model', '')
@@ -80,6 +87,7 @@ export default defineComponent({
       }
 
       modelWrapper.appendChild(modelEl)
+      itemsLoaded.value = itemsLoaded.value + 1
 
       return modelWrapper
     }
@@ -100,12 +108,17 @@ export default defineComponent({
         this.el.addEventListener('raycaster-intersection', function () {
           console.log('Player hit something!')
         })
+
+        this.el.addEventListener('raycaster-intersection-cleared', function () {
+          setTimeout(() => {
+            ctx.emit('intersectionCleared')
+          }, 2000)
+        })
       }
     })
 
     AFRAME.registerComponent('model', {
       init() {
-        const scene = document.querySelector('a-scene')
         this.el.addEventListener('raycaster-intersected', (evt: any) => {
           const id = evt.target.getAttribute('id')
           console.log('raycaster-intersected')
@@ -121,23 +134,7 @@ export default defineComponent({
               if (item.isCatched) {
                 return
               } else {
-                console.log('catched')
-
-                item.isCatched = true
-                const el = document.getElementById(`${item.id}`)
-                ctx.emit('catchItem', reminder.value.length)
-
-                if (scene && el) {
-                  ctx.emit('catchItem', reminder.value.length)
-                  scene?.removeChild(el)
-                  console.log(el)
-
-                  // scene.removeChild(el)
-                  // setTimeout(() => {
-                  //   ctx.emit('catchItem', reminder.value.length)
-                  //   scene.removeChild(el)
-                  // }, 1000)
-                }
+                ctx.emit('catchItem', item.id)
               }
             }
           })
@@ -149,14 +146,11 @@ export default defineComponent({
       init() {
         const raycaster = document.createElement('a-entity')
         raycaster.setAttribute('user-raycaster', '')
-        raycaster.setAttribute('raycaster', 'objects: .clickable')
+        raycaster.setAttribute('raycaster', 'objects: .clickable; far: 5;')
         raycaster.setAttribute('cursor', 'fuse: true;')
         this.el.appendChild(raycaster)
 
         // this.el.addEventListener('gps-camera-update-positon', (evt) => {
-        //   alert(JSON.stringify(evt))
-        //   alert(666)
-        //   alert(this.el.distance)
         // })
       }
     })

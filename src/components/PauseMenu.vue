@@ -5,20 +5,9 @@
         <img src="/ui/paused.png" />
       </div>
 
-      <button type="button" class="pause-menu__button-text" @click="$emit('unpaused')">
-        <img src="/ui/block-button.png" />
-        <span>{{ t('play') }}</span>
-      </button>
-
-      <button type="button" class="pause-menu__button-text" @click="$emit('restart')">
-        <img src="/ui/block-button.png" />
-        <span>{{ t('restart') }}</span>
-      </button>
-
-      <button type="button" class="pause-menu__button-text" @click="$emit('exit')">
-        <img src="/ui/block-button.png" />
-        <span>{{ t('exit') }}</span>
-      </button>
+      <AppButtonVue :title="t('play')" @click="$emit('unpaused')" />
+      <AppButtonVue :title="t('restart')" @click="$emit('restart')" />
+      <AppButtonVue :title="t('exit')" @click="$emit('exit')" />
     </div>
   </GameModal>
 </template>
@@ -27,6 +16,7 @@
 import { t } from '@/translator'
 import GameModal from './GameModal.vue'
 import { defineComponent } from 'vue'
+import AppButtonVue from '@/elements/AppButton.vue'
 
 export default defineComponent({
   emits: ['unpaused', 'exit', 'restart'],
@@ -34,17 +24,16 @@ export default defineComponent({
   setup() {
     return { t }
   },
-  components: { GameModal }
+  components: { GameModal, AppButtonVue }
 })
 </script>
 
 <style lang="scss">
 .pause-menu {
-  &__button-text {
+  button {
     margin: 0 auto;
-    @include button-text;
 
-    & + .pause-menu__button-text {
+    & + & {
       margin-top: 16px;
     }
   }

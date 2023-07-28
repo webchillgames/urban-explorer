@@ -7,6 +7,14 @@
       :items="game.items"
       @finish="finish"
       @catchItem="catchItem"
+      @intersectionCleared="intersectionCleared"
+    />
+
+    <AppButtonVue
+      v-if="isCatchBtnShowed"
+      :title="`${t('catch')}!`"
+      class="game-play__catch"
+      @click="removeItem"
     />
 
     <GameBottomsheet v-if="game.items.length" />
@@ -32,6 +40,8 @@ import ResultAlert from '@/components/ResultAlert.vue'
 import AframeScene from '@/components/AframeScene.vue'
 import LevelComleteMenu from '@/components/LevelComleteMenu.vue'
 import { useRouter } from 'vue-router'
+import { t } from '@/translator'
+import AppButtonVue from '@/elements/AppButton.vue'
 
 export default defineComponent({
   components: {
@@ -40,24 +50,47 @@ export default defineComponent({
     GameBottomsheet,
     PauseMenu,
     LevelComleteMenu,
-    ResultAlert
+    ResultAlert,
+    AppButtonVue
   },
   setup() {
     const gameStore = useGameStore()
     const { game } = storeToRefs(gameStore)
-    const { clearResults } = gameStore
+    const { clearResults, setCatchStatus } = gameStore
     const router = useRouter()
 
     const isPaused = ref(false)
     const isFinished = ref(false)
     const showMidResult = ref(false)
 
+    const isCatchBtnShowed = ref(false)
+    const showingItemId = ref<string | null>(null)
+
     function finish() {
       isFinished.value = true
     }
 
-    function catchItem() {
-      showMidResult.value = true
+    function intersectionCleared() {
+      showingItemId.value = null
+      isCatchBtnShowed.value = false
+    }
+
+    function catchItem(id: string) {
+      const el = document.getElementById(`${id}`)
+      el?.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 3000')
+
+      isCatchBtnShowed.value = true
+      showingItemId.value = id
+    }
+
+    function removeItem() {
+      if (showingItemId.value) {
+        const el = document.getElementById(`${showingItemId.value}`)
+        showMidResult.value = true
+        el?.setAttribute('visible', 'false')
+        setCatchStatus(showingItemId.value)
+        intersectionCleared()
+      }
     }
 
     function exit() {
@@ -76,6 +109,7 @@ export default defineComponent({
     })
 
     return {
+      t,
       restart,
       exit,
       catchItem,
@@ -83,7 +117,10 @@ export default defineComponent({
       isFinished,
       isPaused,
       game,
-      showMidResult
+      showMidResult,
+      isCatchBtnShowed,
+      removeItem,
+      intersectionCleared
     }
   }
 })
@@ -109,6 +146,13 @@ export default defineComponent({
       width: 50px;
       height: 50px;
     }
+  }
+
+  &__catch {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>
