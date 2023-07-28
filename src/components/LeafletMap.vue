@@ -109,8 +109,8 @@ export default defineComponent({
 
     function success(pos: GeolocationPosition) {
       const crd = pos.coords
-      // userLat.value = crd.latitude
-      // userLong.value = crd.longitude
+      userLat.value = crd.latitude
+      userLong.value = crd.longitude
     }
 
     navigator.geolocation.watchPosition(success, error, options)
@@ -132,6 +132,8 @@ export default defineComponent({
     function setUserMarkerToMap() {
       if (map.value) {
         map.value.addLayer(userMarkerId)
+        console.log('ну типо должен');
+        
       }
     }
 

@@ -2,7 +2,7 @@
   <div class="game-menu">
     <div class="wrapper">
       <div class="game-menu__top">
-        <BackButton link="/games" :title="t('to.games')" />
+        <BackButton link="/games" :title="t('toGames')" />
         <RouterLink
           :to="`/game/${$router.currentRoute.value.params.id}/play`"
           class="game-menu__go game-menu__go--link"

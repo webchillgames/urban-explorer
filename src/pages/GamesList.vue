@@ -1,7 +1,7 @@
 <template>
   <div class="levels">
     <div class="wrapper">
-      <BackButton link="/" :title="t('to.main')" />
+      <BackButton link="/" :title="t('toMain')" />
 
       <h3>{{ t('games') }}</h3>
       <ul v-if="levels">

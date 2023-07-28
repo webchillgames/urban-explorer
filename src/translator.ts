@@ -5,12 +5,14 @@ import { default as en } from "@/i18n/en.json";
 
 export const appLang = ref(window.localStorage.getItem("urban-explorer-lang") || "ru");
 
-export function t(key: string) {
+export function t(key: string): string {
   if (appLang.value === "ru") {
-    return ru[key];
+    return (ru as Record<string, string>)[key];
   }
 
   if (appLang.value === "en") {
-    return en[key];
+    return (en as Record<string, string>)[key];
   }
+
+  return ''
 }

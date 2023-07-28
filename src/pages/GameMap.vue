@@ -1,7 +1,7 @@
 <template>
   <div class="game-map">
     <div class="game-map__tip">
-      {{ t('map.tip') }}
+      {{ t('mapTip') }}
       <div class="game-map__pin">
         <img src="/pin.png" />
         <span>{{ t('you') }}</span>

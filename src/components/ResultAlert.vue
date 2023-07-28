@@ -1,7 +1,7 @@
 <template>
   <GameModal :hasOverlay="false" :hasStars="true">
     <div class="result-alert">
-      <h3>{{ t('left.to.find') }}</h3>
+      <h3>{{ t('leftToFind') }}</h3>
 
       <WhiteCircle class="result-alert__reminder">
         <span>{{ calcLastItems }}</span>
