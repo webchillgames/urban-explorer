@@ -32,10 +32,10 @@ export default defineComponent({
 .pause-menu {
   button {
     margin: 0 auto;
+  }
 
-    & + & {
-      margin-top: 16px;
-    }
+  button + button {
+    margin-top: 16px;
   }
 
   &__title {

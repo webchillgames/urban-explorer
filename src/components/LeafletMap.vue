@@ -68,7 +68,7 @@ export default defineComponent({
         interactive: true,
         icon: pin
       }
-      return props.items.map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
+      return props.items.filter(v=> v.isShow === true).map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
     })
 
     watch(userLong, () => {

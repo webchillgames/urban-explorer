@@ -5,7 +5,7 @@
     arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false"
     renderer="antialias: true; alpha: true"
   >
-    <a-camera
+    <!-- <a-camera
       user-camera
       id="camera"
       gps-new-camera
@@ -13,19 +13,19 @@
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera>
+    ></a-camera> -->
 
     <!-- камера для тестов  -->
 
-    <!-- <a-camera
+    <a-camera
       user-camera
       id="camera"
-      gps-new-camera="simulateLatitude:-6.935503;simulateLongitude:107.681075"
+      gps-new-camera="simulateLatitude:-8.552636;simulateLongitude: 115.274889"
       rotation-reader
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera> -->
+    ></a-camera>
   </a-scene>
 </template>
 
@@ -159,3 +159,7 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss">
+.asf {
+  padding: ;
+}</style>
