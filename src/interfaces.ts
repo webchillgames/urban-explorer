@@ -28,9 +28,12 @@ export interface IGame {
   items: IItem[]
   title: string
   id: string
+  camera: number[]
 }
 
 export interface ILevel {
   title: string
   id: number
+  camera: number[]
+
 }

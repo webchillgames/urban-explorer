@@ -1,6 +1,6 @@
 <template>
   <div class="game-bottomsheet" :class="{ open: top === 0 }" :style="{ top: top + 'px' }">
-    <button type="button" @touchstart="start" @touchmove="move">
+    <button type="button" @touchstart="start" @touchmove="move" @click="close">
       <AppSvg link="arrow-top" />
     </button>
     <div class="wrapper" ref="wrapperRef">
@@ -43,20 +43,26 @@ export default defineComponent({
             coordY.value = 0
           }
         } else {
+         
           top.value = coordY.value + newCoordY
 
           if (top.value > 0) {
-            top.value = window.innerHeight
+            close()
           }
         }
       }
+    }
+
+    function close() {
+      top.value = window.innerHeight
     }
 
     return {
       start,
       move,
       game,
-      top
+      top,
+      close
     }
   },
   components: { LeafletMap, AppSvg }

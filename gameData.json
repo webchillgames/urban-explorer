@@ -92,6 +92,67 @@
             ],
             "task": "Game for testing near my hotel",
             "title": "Test version"
+        },
+        {
+            "id": "3",
+            "camera": [
+                -8.552508,
+                115.274838
+            ],
+            "items": [
+                {
+                    "coords": [
+                        -8.552448,
+                        115.274773
+                    ],
+                    "id": "1",
+                    "isCatched": false,
+                    "isShow": false,
+                    "model": "mech-dron",
+                    "position": "0 0 0",
+                    "rotation": "0 0 0",
+                    "scale": "2.5 2.5 2.5"
+                },
+                {
+                    "coords": [
+                        -8.552505, 115.274769
+                    ],
+                    "id": "2",
+                    "isCatched": false,
+                    "isShow": false,
+                    "model": "shiba",
+                    "position": "0 0 0",
+                    "rotation": "0 0 0",
+                    "scale": "2.5 2.5 2.5"
+                },
+                {
+                    "coords": [
+                        -8.552565, 115.274767
+                    ],
+                    "id": "2",
+                    "isCatched": false,
+                    "isShow": false,
+                    "model": "flan_kawai",
+                    "position": "0 0 0",
+                    "rotation": "0 0 0",
+                    "scale": "2.5 2.5 2.5"
+                },
+                {
+                    "coords": [
+                        -8.552571, 115.274841
+                    ],
+                    "id": "2",
+                    "isCatched": false,
+                    "isShow": false,
+                    "model": "phoenix_bird",
+                    "position": "0 0 0",
+                    "rotation": "0 0 0",
+                    "scale": "2.5 2.5 2.5"
+                }
+                
+            ],
+            "task": "Тест 2",
+            "title": "Для тестирования нужно отключить доступ к геолокации у браузера"
         }
     ]
 }

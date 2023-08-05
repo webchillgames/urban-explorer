@@ -1,0 +1,11 @@
+Model Information:
+* title:	Flan_Kawaii
+* source:	https://sketchfab.com/3d-models/flan-kawaii-0f9fd4b5fce04594a4fc53e26a40f3b6
+* author:	Mafer Luna (https://sketchfab.com/Fernanda.Aldaco.de.Luna)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Flan_Kawaii" (https://sketchfab.com/3d-models/flan-kawaii-0f9fd4b5fce04594a4fc53e26a40f3b6) by Mafer Luna (https://sketchfab.com/Fernanda.Aldaco.de.Luna) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

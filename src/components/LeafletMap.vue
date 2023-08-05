@@ -7,20 +7,24 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, type PropType, watch } from 'vue'
 import type { IItem } from '@/interfaces'
-
+import { useGameStore } from '@/stores/game'
+import { storeToRefs } from 'pinia'
 import 'leaflet/dist/leaflet.css'
 
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 
 export default defineComponent({
-  props: {
-    items: {
-      type: Array as PropType<IItem[]>,
-      required: true
-    }
-  },
+  // props: {
+  //   items: {
+  //     type: Array as PropType<IItem[]>,
+  //     required: true
+  //   }
+  // },
   setup(props) {
+    const gameStore = useGameStore()
+    const { game } = storeToRefs(gameStore)
+    const items = computed(() => game.value.items)
     const zoom = ref(15)
     const mapRef = ref()
     const map = ref<L.Map>()
@@ -50,9 +54,9 @@ export default defineComponent({
     function setCenter() {
       let xSum = 0
       let ySum = 0
-      const quantity = props.items.length
+      const quantity = items.value.length
 
-      props.items.forEach((v: IItem) => {
+      items.value.forEach((v: IItem) => {
         xSum = xSum + v.coords[0]
         ySum = ySum + v.coords[1]
       })
@@ -68,7 +72,7 @@ export default defineComponent({
         interactive: true,
         icon: pin
       }
-      return props.items.filter(v=> v.isShow === true).map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
+      return items.value.filter(v=> v.isShow === true).map((v) => L.marker({ lat: v.coords[0], lng: v.coords[1] }, options))
     })
 
     watch(userLong, () => {

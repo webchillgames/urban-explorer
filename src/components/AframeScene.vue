@@ -14,9 +14,11 @@
       look-controls
       reverse-mouse-drag
     ></a-camera> -->
+    <!-- 
+  -->
 
     <!-- камера для тестов  -->
-
+    <!-- 
     <a-camera
       user-camera
       id="camera"
@@ -25,24 +27,34 @@
       look-controls-enabled
       look-controls
       reverse-mouse-drag
-    ></a-camera>
+    ></a-camera> 
+  -->
   </a-scene>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref, type PropType, watch } from 'vue'
+
 import type { IItem } from '@/interfaces'
+import { useGameStore } from '@/stores/game'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   emits: ['catchItem', 'finish', 'intersectionCleared'],
-  props: {
-    items: {
-      type: Array as PropType<IItem[]>,
-      required: true
-    }
-  },
+  // props: {
+  // game: {
+  //   type: Object as PropType<IGame>,
+  //   required: true
+  // },
+  // },
   setup(props, ctx) {
-    const items = computed(() => props.items)
+    const gameStore = useGameStore()
+    const { game } = storeToRefs(gameStore)
+    console.log(game.value)
+
+    const items = computed(() => game.value.items)
+    const camera = computed(() => game.value.camera)
+
     const reminder = computed(() => items.value.filter((v: IItem) => v.isCatched === false))
     const itemsLoaded = ref(0)
 
@@ -94,11 +106,35 @@ export default defineComponent({
 
     AFRAME.registerComponent('scene', {
       init() {
+        const cameraEl = document.createElement('a-camera')
+        cameraEl.setAttribute('user-camera', '')
+        cameraEl.setAttribute('id', 'camera')
+        cameraEl.setAttribute('rotation-reader', '')
+        cameraEl.setAttribute('look-controls-enabled', '')
+        cameraEl.setAttribute('look-controls', '')
+
+        if (camera.value.length) {
+          console.log('camera.value[0]', camera.value[0])
+
+          cameraEl.setAttribute(
+            'gps-new-camera',
+            `simulateLatitude:${camera.value[0]};simulateLongitude: ${camera.value[1]}`
+          )
+        } else {
+          cameraEl.setAttribute('gps-new-camera', '')
+        }
+        this.el.appendChild(cameraEl)
+
         items.value.forEach((item: IItem) => {
           if (item.isShow) {
             this.el.appendChild(createModelElement(item))
           }
         })
+        // ТЕСТ
+        // const camera = document.querySelector('a-camera')
+        // if (camera) {
+        //   console.log(camera.getAttribute('gps-new-camera'))
+        // }
       }
     })
 
@@ -159,7 +195,3 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="scss">
-.asf {
-  padding: ;
-}</style>

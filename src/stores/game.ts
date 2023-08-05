@@ -7,7 +7,8 @@ export const useGameStore = defineStore('game', {
       id: '',
       task: '' as String,
       items: [] as IItem[],
-      title: ''
+      title: '',
+      camera: [] as number[]
     }
   }),
   getters: {
@@ -19,6 +20,10 @@ export const useGameStore = defineStore('game', {
       this.game.items = v.items
       this.game.title = v.title
       this.game.task = v.task
+
+      if (v.camera && v.camera.length) {
+        this.game.camera = v.camera
+      }
     },
     setCatchStatus(id: string) {
       this.game.items.forEach((v) => {

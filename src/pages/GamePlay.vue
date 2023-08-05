@@ -3,19 +3,18 @@
     <GameTopMenu @paused="isPaused = true" />
 
     <AframeScene
-      v-if="game && game.items"
-      :items="game.items"
+      v-if="game && game.items.length"
       @finish="finish"
       @catchItem="catchItem"
       @intersectionCleared="intersectionCleared"
     />
 
-    <AppButtonVue
+    <!-- <AppButtonVue
       v-if="isCatchBtnShowed"
       :title="`${t('catch')}!`"
       class="game-play__catch"
       @click="removeItem"
-    />
+    /> -->
 
     <GameBottomsheet v-if="game.items.length" />
 
@@ -30,7 +29,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import { useGameStore } from '@/stores/game'
-import { storeToRefs } from 'pinia'
+// import { storeToRefs } from 'pinia'
 
 import GameTopMenu from '@/components/GameTopMenu.vue'
 import PauseMenu from '@/components/PauseMenu.vue'
@@ -41,7 +40,8 @@ import AframeScene from '@/components/AframeScene.vue'
 import LevelComleteMenu from '@/components/LevelComleteMenu.vue'
 import { useRouter } from 'vue-router'
 import { t } from '@/translator'
-import AppButtonVue from '@/elements/AppButton.vue'
+import { storeToRefs } from 'pinia'
+// import AppButtonVue from '@/elements/AppButton.vue'
 
 export default defineComponent({
   components: {
@@ -50,8 +50,8 @@ export default defineComponent({
     GameBottomsheet,
     PauseMenu,
     LevelComleteMenu,
-    ResultAlert,
-    AppButtonVue
+    ResultAlert
+    // AppButtonVue
   },
   setup() {
     const gameStore = useGameStore()

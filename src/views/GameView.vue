@@ -24,15 +24,14 @@ export default defineComponent({
       try {
         const game = await customAxios.get(`levels/${route.params.id}`)
         setCurrentGame(game.data)
+        console.log(game.data);
         
       } catch (e) {
         console.log(e)
       }
     }
 
-    onMounted(async() => {
-      await getGame()      
-    })
+    onMounted(getGame)
 
     return {}
   }
